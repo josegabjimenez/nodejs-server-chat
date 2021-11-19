@@ -13,5 +13,8 @@
     "server-chat"
   ],
   "author": "Jose Gabriel Jiménez Vidales <josegabojimenez@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
