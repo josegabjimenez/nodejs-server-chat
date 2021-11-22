@@ -15,6 +15,7 @@
   "author": "Jose Gabriel Jiménez Vidales <josegabojimenez@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.1.2",
     "express": "^4.17.1"
   }
 }
