@@ -1,11 +1,11 @@
 const chalk = require('chalk');
 
-exports.success = (req, res, message, statusCode) => {
+exports.success = (req, res, message, statusCode, data) => {
 	res.status(statusCode || 200).send({
 		error: null,
 		message,
 		statusCode,
-		data: req.body,
+		data,
 	});
 };
 
