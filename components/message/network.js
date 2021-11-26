@@ -4,14 +4,11 @@ const controller = require('./controller');
 const router = express.Router();
 
 //Routes
-router.get('/', (req, res) => {
-	console.log(req.headers);
-	res.header({
-		'custom-header': 'This is a test',
-		'another-custom-header': 'Another test',
-	});
-	// res.send('Data fetched');
-	response.success(req, res, 'Messages were retrieved');
+router.get('/', async (req, res) => {
+	try {
+		const messages = await controller.getMessages();
+		response.success(req, res, 'Messages were retrieved.', 200, messages);
+	} catch (err) {}
 });
 
 router.post('/', async (req, res) => {
