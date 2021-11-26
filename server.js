@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('./config');
 const app = express();
 
 //Router
@@ -18,4 +19,5 @@ app.use('/app', express.static('./public'));
 //Listening server
 app.listen(PORT, () => {
 	console.log(`Listening on port http://localhost:${PORT}`);
+	console.log(config.user);
 });
