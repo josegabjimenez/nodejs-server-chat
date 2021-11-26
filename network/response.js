@@ -10,10 +10,12 @@ exports.success = (req, res, message, statusCode, data) => {
 };
 
 exports.error = (req, res, message, statusCode, details) => {
-	console.log(
-		chalk.bgRed.black.italic('[Internal Error]:'),
-		chalk.red(details)
-	);
+	if (details) {
+		console.log(
+			chalk.bgRed.black.italic('[Internal Error]:'),
+			chalk.red(details)
+		);
+	}
 	res.status(statusCode || 500).send({
 		error: message,
 		message: null,

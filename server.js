@@ -6,7 +6,7 @@ const app = express();
 const router = require('./network/routes');
 
 //PORT
-const PORT = 3000 || null;
+const PORT = 3000;
 
 //Body Parser
 app.use(express.json());
@@ -19,5 +19,4 @@ app.use('/app', express.static('./public'));
 //Listening server
 app.listen(PORT, () => {
 	console.log(`Listening on port http://localhost:${PORT}`);
-	console.log(config.user);
 });

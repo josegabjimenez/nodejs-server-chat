@@ -8,7 +8,9 @@ router.get('/', async (req, res) => {
 	try {
 		const messages = await controller.getMessages();
 		response.success(req, res, 'Messages were retrieved.', 200, messages);
-	} catch (err) {}
+	} catch (err) {
+		response.error(req, res, err, 400);
+	}
 });
 
 router.post('/', async (req, res) => {

@@ -1,24 +1,26 @@
 const express = require('express');
 const response = require('../../network/response');
+const controller = require('./controller');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-	let { error } = req.query;
-	if (error == 'test') {
-		response.error(
-			req,
-			res,
-			'There was an error',
-			500,
-			'Another simulation error but this time is on the users section.'
-		);
-	} else {
-		response.success(req, res, 'Users were retrieved', 200);
+router.get('/', async (req, res) => {
+	try {
+		const users = await controller.getAllUsers();
+		response.success(req, res, 'Users were retrieved.', 200, users);
+	} catch (err) {
+		response.error(req, res, err, 400);
 	}
 });
 
-router.post('/', (req, res) => {
-	response.success(req, res, 'User was created', 201);
+router.post('/', async (req, res) => {
+	const { name, email, password } = req.body;
+
+	try {
+		const newUser = await controller.addUser(name, email, password);
+		response.success(req, res, 'User was created.', 201, newUser);
+	} catch (err) {
+		response.error(req, res, err, 400);
+	}
 });
 
 module.exports = router;
