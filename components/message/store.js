@@ -5,8 +5,12 @@ const Model = require('./model');
 const config = require('../../config');
 const chalk = require('chalk');
 
-db.connect(config.uri);
-console.log(chalk.blue('Database was connected successfully'));
+try {
+	db.connect(config.uri);
+	console.log(chalk.blue('[db] Database was connected successfully.'));
+} catch (err) {
+	console.error(chalk.red("[db] Can't connect to the database."));
+}
 
 // Store a message in the database
 const addMessage = (message) => {
@@ -16,8 +20,12 @@ const addMessage = (message) => {
 
 // Get the list of messages stored in the Database
 const getMessages = async () => {
-	const messages = await Model.find();
-	return messages;
+	try {
+		const messages = await Model.find();
+		return messages;
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
 module.exports = {

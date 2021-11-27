@@ -1,8 +1,13 @@
 const store = require('./store');
 
 const getMessages = () => {
-	return new Promise((resolve, reject) => {
-		resolve(store.getAll());
+	return new Promise(async (resolve, reject) => {
+		try {
+			const messages = await store.getAll();
+			resolve(messages);
+		} catch (err) {
+			reject("There's something wrong.");
+		}
 	});
 };
 
