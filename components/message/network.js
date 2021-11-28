@@ -4,9 +4,12 @@ const controller = require('./controller');
 const router = express.Router();
 
 //Routes
+//GET
 router.get('/', async (req, res) => {
+	const query = req.query || null;
+
 	try {
-		const messages = await controller.getMessages();
+		const messages = await controller.getMessages(query);
 		response.success(req, res, 'Messages were retrieved.', 200, messages);
 	} catch (err) {
 		response.error(
@@ -19,6 +22,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
+// POST
 router.post('/', async (req, res) => {
 	const { user, message } = req.body;
 
@@ -27,29 +31,21 @@ router.post('/', async (req, res) => {
 		const fullMessage = await controller.addMessage(user, message);
 		response.success(req, res, 'Message was added.', 201, fullMessage);
 	} catch (err) {
-		response.error(
-			req,
-			res,
-			err,
-			400,
-			"The client doesn't put a message or username"
-		);
+		response.error(req, res, err.message, err.status, err.internal);
 	}
+});
 
-	// PROMISES
-	// 	.addMessage(user, message)
-	// 	.then((fullMessage) =>
-	// 		response.success(req, res, 'Message was sent', 201, fullMessage)
-	// 	)
-	// 	.catch((err) =>
-	// 		response.error(
-	// 			req,
-	// 			res,
-	// 			err,
-	// 			400,
-	// 			"The user don't put a message or don't have an username"
-	// 		)
-	// 	);
+// PATCH
+router.patch('/:id', async (req, res) => {
+	const { id } = req.params;
+	const { message } = req.body;
+
+	try {
+		const updatedMessage = await controller.updateMessage(id, message);
+		response.success(req, res, 'Message was updated.', 200, updatedMessage);
+	} catch (err) {
+		response.error(req, res, err.message, err.status, err.internal);
+	}
 });
 
 module.exports = router;
