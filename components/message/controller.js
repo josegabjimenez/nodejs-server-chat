@@ -61,8 +61,32 @@ const updateMessage = (id, message) => {
 	});
 };
 
+const deleteMessage = (id) => {
+	return new Promise(async (resolve, reject) => {
+		if (!id) {
+			reject({
+				message: 'Invalid data.',
+				internal: null,
+				status: 400,
+			});
+		}
+
+		try {
+			const deletedMessage = await store.delete(id);
+			resolve(deletedMessage);
+		} catch (err) {
+			reject({
+				message: 'An internal error has ocurred.',
+				internal: `Something went wrong with  the message store (deleteMessage)\n ${err.message}`,
+				status: 500,
+			});
+		}
+	});
+};
+
 module.exports = {
 	getMessages,
 	addMessage,
 	updateMessage,
+	deleteMessage,
 };

@@ -48,4 +48,26 @@ router.patch('/:id', async (req, res) => {
 	}
 });
 
+// DELETE
+router.delete('/:id', async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const deletedMessage = await controller.deleteMessage(id);
+		if (deletedMessage) {
+			response.success(
+				req,
+				res,
+				'Message was deleted successfully.',
+				200,
+				deletedMessage
+			);
+		} else {
+			response.error(req, res, 'This message does not exist.', 400);
+		}
+	} catch (err) {
+		response.error(req, res, err.message, err.status, err.internal);
+	}
+});
+
 module.exports = router;

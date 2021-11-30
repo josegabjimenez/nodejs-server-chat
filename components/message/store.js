@@ -52,8 +52,18 @@ const updateMessage = async (id, message) => {
 	}
 };
 
+const deleteMessage = async (id) => {
+	try {
+		const deletedMessage = await Model.findByIdAndDelete(id);
+		return deletedMessage;
+	} catch (err) {
+		throw new Error(err);
+	}
+};
+
 module.exports = {
 	add: addMessage,
 	getAll: getMessages,
 	update: updateMessage,
+	delete: deleteMessage,
 };
