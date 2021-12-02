@@ -19,21 +19,22 @@ const addMessage = (user, message) => {
 				internal: null,
 				status: 400,
 			});
-		}
-		const newFullMessage = {
-			user,
-			message,
-			date: new Date(),
-		};
-		try {
-			const newMessage = await store.add(newFullMessage);
-			resolve(newMessage);
-		} catch (err) {
-			reject({
-				message: 'An internal error has occurred.',
-				internal: `Something went wrong with the message store (addMessage) \n ${err.message}`,
-				status: 500,
-			});
+		} else {
+			const newFullMessage = {
+				user,
+				message,
+				date: new Date(),
+			};
+			try {
+				const newMessage = await store.add(newFullMessage);
+				resolve(newMessage);
+			} catch (err) {
+				reject({
+					message: 'An internal error has occurred.',
+					internal: `Something went wrong with the message store (addMessage) \n ${err.message}`,
+					status: 500,
+				});
+			}
 		}
 	});
 };
