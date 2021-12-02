@@ -9,6 +9,14 @@ exports.success = (req, res, message, statusCode, data) => {
 	});
 };
 
+/**
+ * ! Is used for log errors.
+ * @param {Request} req
+ * @param {Response} res
+ * @param {String} message
+ * @param {Number} statusCode
+ * @param {String} details
+ */
 exports.error = (req, res, message, statusCode, details) => {
 	if (details) {
 		console.log(
