@@ -6,7 +6,11 @@ const getMessages = (query) => {
 			const messages = await store.getAll(query);
 			resolve(messages);
 		} catch (err) {
-			reject("There's something wrong.");
+			reject({
+				message: 'An internal error has occurred.',
+				internal: `There's an error on the messages store (getMessages) \n ${err.message}`,
+				status: 500,
+			});
 		}
 	});
 };

@@ -12,13 +12,7 @@ router.get('/', async (req, res) => {
 		const messages = await controller.getMessages(query);
 		response.success(req, res, 'Messages were retrieved.', 200, messages);
 	} catch (err) {
-		response.error(
-			req,
-			res,
-			err,
-			500,
-			"There's an error on the messages store (getMessages)"
-		);
+		response.error(req, res, err.message, err.status, err.internal);
 	}
 });
 

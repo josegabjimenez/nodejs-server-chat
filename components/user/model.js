@@ -17,6 +17,6 @@ const messageSchema = new Schema({
 	dateOfCreation: Date,
 });
 
-const model = mongoose.model('users', messageSchema);
+const model = mongoose.model('User', messageSchema);
 
 module.exports = model;

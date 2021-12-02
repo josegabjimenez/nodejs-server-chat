@@ -22,7 +22,9 @@ const getMessages = async (query) => {
 	}
 
 	try {
-		const messages = await Model.find(filter);
+		const messages = await Model.find(filter)
+			.populate('user', ['name', 'email'])
+			.exec();
 		return messages;
 	} catch (err) {
 		throw new Error(err);
