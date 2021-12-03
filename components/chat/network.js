@@ -29,4 +29,21 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/:userId', async (req, res) => {
+	const { userId } = req.params;
+
+	try {
+		const chats = await controller.getChats(userId);
+		response.success(
+			req,
+			res,
+			'Chats were retrieved successfully.',
+			200,
+			chats
+		);
+	} catch (err) {
+		response.error(req, res, err.message, err.status, err.internal);
+	}
+});
+
 module.exports = router;

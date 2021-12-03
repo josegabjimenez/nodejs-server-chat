@@ -1,3 +1,4 @@
+const config = require('../../config');
 const store = require('./store');
 
 const getMessages = (query) => {
@@ -15,19 +16,27 @@ const getMessages = (query) => {
 	});
 };
 
-const addMessage = (user, message) => {
+const addMessage = (chat, user, message, file) => {
 	return new Promise(async (resolve, reject) => {
-		if (!user || !message) {
+		if (!chat || !user || !message) {
 			reject({
-				message: "There's no user or message.",
+				message: "There's no user, message or chat.",
 				internal: null,
 				status: 400,
 			});
 		} else {
+			let fileUrl = '';
+
+			if (file) {
+				fileUrl = `http://${config.host}/app/files/${file.filename}`;
+			}
+
 			const newFullMessage = {
+				chat,
 				user,
 				message,
 				date: new Date(),
+				fileUrl,
 			};
 			try {
 				const newMessage = await store.add(newFullMessage);

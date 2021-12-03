@@ -5,8 +5,16 @@ const createChat = (users) => {
 	return newChat.save();
 };
 
-const getChats = () => {
-	return Model.find();
+const getChats = (userId) => {
+	let filter = {};
+
+	if (userId) {
+		filter = {
+			users: userId,
+		};
+	}
+
+	return Model.find(filter).populate('users', 'name').exec();
 };
 
 module.exports = {

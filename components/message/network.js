@@ -1,10 +1,25 @@
 const express = require('express');
 const response = require('../../network/response');
+const multer = require('multer'); //? Helps to upload binary files
+const path = require('path'); //? In this code is used to get the extension of a file
 const controller = require('./controller');
 const router = express.Router();
 
-//Routes
-//GET
+// ? Upload multer instance
+const storage = multer.diskStorage({
+	destination: 'public/files/',
+	filename: (req, file, cb) => {
+		const extension = path.extname(file.originalname);
+		//// console.log(extension);
+		cb(null, `${Date.now()}.${extension}`);
+	},
+});
+const upload = multer({
+	storage: storage,
+});
+
+// * ROUTES
+// GET
 router.get('/', async (req, res) => {
 	const query = req.query || null;
 
@@ -17,12 +32,17 @@ router.get('/', async (req, res) => {
 });
 
 // POST
-router.post('/', async (req, res) => {
-	const { user, message } = req.body;
+router.post('/', upload.single('file'), async (req, res) => {
+	const { chat, user, message } = req.body;
 
 	//ASYNC AWAIT
 	try {
-		const fullMessage = await controller.addMessage(user, message);
+		const fullMessage = await controller.addMessage(
+			chat,
+			user,
+			message,
+			req.file
+		);
 		response.success(req, res, 'Message was added.', 201, fullMessage);
 	} catch (err) {
 		response.error(req, res, err.message, err.status, err.internal);

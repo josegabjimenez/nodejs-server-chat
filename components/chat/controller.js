@@ -26,11 +26,11 @@ const createChat = async (users) => {
 	});
 };
 
-const getChats = () => {
+const getChats = (userId) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const allChats = await store.getAll();
-			resolve(allChats);
+			const chats = await store.getAll(userId);
+			resolve(chats);
 		} catch (err) {
 			reject({
 				message: 'An internal error has occurred.',

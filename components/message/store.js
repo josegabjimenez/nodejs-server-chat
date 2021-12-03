@@ -15,10 +15,14 @@ const addMessage = async (message) => {
 const getMessages = async (query) => {
 	let filter = {};
 
-	if (query) {
-		query.user ? (filter.user = new RegExp(query.user, 'i')) : null;
-		query.message ? (filter.message = new RegExp(query.message, 'i')) : null;
-		query.id ? (filter._id = query.id) : null;
+	if (query.chat) {
+		// ! DEPRECATED
+		//// query.user ? (filter = { user: { name: new RegExp(query.user, 'i') } })
+		//// 	: null;
+		//// query.message ? (filter.message = new RegExp(query.message, 'i')) : null;
+		//// query.id ? (filter._id = query.id) : null;
+
+		filter.chat = query.chat;
 	}
 
 	try {
