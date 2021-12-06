@@ -16,6 +16,7 @@
 	"author": "Jose Gabriel Jiménez Vidales <josegabojimenez@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"express": "^4.17.1",
 		"mongoose": "^6.0.13",
 		"multer": "^1.4.3",

@@ -7,6 +7,7 @@ const server = require('http').Server(app);
 const socket = require('./socket');
 const router = require('./network/routes');
 const db = require('./db');
+const cors = require('cors');
 
 // PORT
 const PORT = 3000;
@@ -14,6 +15,7 @@ const PORT = 3000;
 // Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Router set
 router(app);
