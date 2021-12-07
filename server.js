@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 
+// Config
+const config = require('./config');
+
 // Imports
 const socket = require('./socket');
 const router = require('./network/routes');
@@ -10,7 +13,7 @@ const db = require('./db');
 const cors = require('cors');
 
 // PORT
-const PORT = 3000;
+const PORT = config.port;
 
 // Body Parser
 app.use(express.json());
