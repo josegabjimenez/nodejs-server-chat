@@ -11,6 +11,7 @@ const socket = require('./socket');
 const router = require('./network/routes');
 const db = require('./db');
 const cors = require('cors');
+const path = require('path');
 
 // PORT
 const PORT = config.port;
@@ -22,7 +23,13 @@ app.use(cors());
 
 // Router set
 router(app);
-app.use('/app', express.static('./public'));
+
+// ? Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
+// app.use('/app', express.static('./public'));
 
 // Connection to the Websocket
 socket.connect(server);
