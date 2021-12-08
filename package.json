@@ -17,14 +17,12 @@
 	"author": "Jose Gabriel Jiménez Vidales <josegabojimenez@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"chalk": "^5.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
 		"mongoose": "^6.0.13",
 		"multer": "^1.4.3",
 		"socket.io": "^4.4.0"
-	},
-	"devDependencies": {
-		"chalk": "^4.1.2"
 	}
 }
