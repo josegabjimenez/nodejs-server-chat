@@ -7,3 +7,5 @@ package-lock.json
 
 public/files
 .vscode
+
+client_old/
