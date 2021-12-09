@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { state } from "../state";
-import { useSnapshot } from 'valtio';
+// import { useSnapshot } from 'valtio';
 
 const Home = () => {
-    const snap = useSnapshot(state);
+    // const snap = useSnapshot(state);
 
     const getUsers = async () => {
         const users = await (await fetch("/api/user")).json();
@@ -18,7 +18,7 @@ const Home = () => {
     // grid grid-cols-8 items-center gap-3
 
     return (
-        <main className="bg-red-200 w-full m-0 p-5 flex flex-col items-center rounded shadow-md">
+        <main className="bg-base-100 w-full m-0 p-5 flex flex-col items-center rounded shadow-md">
             <p className="text-4xl font-bold m-4">WELCOME TO MY MESSAGE APP</p>
             <p className="text-1xl font-bold m-4">USERS:</p>
             <section className="grid gap-3 w-full grid-cols-1 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8">
