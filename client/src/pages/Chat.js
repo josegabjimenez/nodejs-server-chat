@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 // SocketIO
 import { io } from 'socket.io-client';
 
@@ -17,6 +18,7 @@ const Chat = () => {
 	const [chatMessages, setChatMessages] = useState([]);
 	const [messageToSend, setMessageToSend] = useState('');
 
+	// Get all the data from the chat
 	const getChat = async (id) => {
 		setChatMessages([]);
 		const chatInfo = await (await fetch(`/api/chat/${id}`)).json();
@@ -25,25 +27,28 @@ const Chat = () => {
 		setChatMessages(chatMessages.data);
 	};
 
+	// Functions to send a message
 	const handleChange = (e) => {
 		setMessageToSend(e.target.value);
 	};
 
 	const sendMessage = async () => {
-		const fullMessage = {
-			chat: snap.currentChatId,
-			user: snap.currentUserId,
-			message: messageToSend,
-		};
+		if (messageToSend) {
+			const fullMessage = {
+				chat: snap.currentChatId,
+				user: snap.currentUserId,
+				message: messageToSend,
+			};
 
-		await fetch('/api/message', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json; charset=UTF-8',
-			},
-			body: JSON.stringify(fullMessage),
-		});
-		setMessageToSend('');
+			await fetch('/api/message', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json; charset=UTF-8',
+				},
+				body: JSON.stringify(fullMessage),
+			});
+			setMessageToSend('');
+		}
 	};
 
 	useEffect(() => {
@@ -59,13 +64,18 @@ const Chat = () => {
 		});
 	}, [snap.currentChatId]);
 
-	useEffect(() => {
-		console.log(chatMessages);
-	}, [chatMessages]);
+	// Redirection
+	if (!snap.currentUserId) {
+		return <Navigate to="/" />;
+	}
+
+	if (!snap.currentChatId) {
+		return <Navigate to="/user" />;
+	}
 
 	return (
 		<main className="w-full min-h-screen flex justify-center items-center md:text-2xl">
-			<section className="card shadow rounded-none max-h-full bg-white w-full md:w-4/5 md:rounded-2xl md:my-4">
+			<section className="card shadow rounded-none bg-white w-full md:w-4/5 md:rounded-2xl md:my-4">
 				<div className="card-body">
 					<h2 className="card-title">
 						{chatInfo

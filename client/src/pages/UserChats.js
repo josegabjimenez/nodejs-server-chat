@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 // Components
 import { Hero, Card, CardGrid } from '../components';
 
@@ -9,6 +10,7 @@ import { useSnapshot } from 'valtio';
 const UserChats = () => {
 	const snap = useSnapshot(state);
 
+	// Get all the chats that an user has
 	const getChats = async (id) => {
 		state.userChats = [];
 		const chats = await (await fetch(`/api/chat/${id}`)).json();
@@ -17,9 +19,13 @@ const UserChats = () => {
 
 	useEffect(() => {
 		const id = snap.currentUserId;
-		console.log(id);
 		getChats(id);
 	}, [snap.currentUserId]);
+
+	// Redirection
+	if (!snap.currentUserId) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<Hero>
