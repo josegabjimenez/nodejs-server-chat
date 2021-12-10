@@ -47,17 +47,17 @@ const Chat = () => {
 	};
 
 	useEffect(() => {
+		// Get Chats
 		const id = snap.currentChatId;
 		console.log(id);
 		getChat(id);
-	}, [snap.currentChatId]);
 
-	useEffect(() => {
-		socket.on(`${snap.currentChatId}`, (data) => {
+		// Listen for new messages
+		socket.on(`${id}`, (data) => {
 			console.log(data);
 			setChatMessages((prevArray) => [...prevArray, data]);
 		});
-	}, []);
+	}, [snap.currentChatId]);
 
 	useEffect(() => {
 		console.log(chatMessages);
