@@ -2,8 +2,9 @@ import { proxy } from 'valtio';
 
 const state = proxy({
 	users: [],
-	currentUserId: '',
 	userChats: [],
+	currentUserId: '',
+	currentChatId: '',
 });
 
 export { state };

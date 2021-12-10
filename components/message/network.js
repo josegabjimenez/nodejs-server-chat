@@ -5,6 +5,8 @@ const path = require('path'); //? In this code is used to get the extension of a
 const controller = require('./controller');
 const router = express.Router();
 
+const { socket } = require('../../socket');
+
 // ? Upload multer instance
 const storage = multer.diskStorage({
 	destination: 'public/files/',
@@ -43,6 +45,10 @@ router.post('/', upload.single('file'), async (req, res) => {
 			message,
 			req.file
 		);
+		const messagePopulated = await controller.getMessages({
+			id: fullMessage._id,
+		});
+		socket.io.emit(`${fullMessage.chat}`, messagePopulated[0]);
 		response.success(req, res, 'Message was added.', 201, fullMessage);
 	} catch (err) {
 		response.error(req, res, err.message, err.status, err.internal);

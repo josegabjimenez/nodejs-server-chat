@@ -34,6 +34,14 @@ app.get('*', (req, res) => {
 // Connection to the Websocket
 socket.connect(server);
 
+socket.socket.io.on('connection', (socket) => {
+	console.log('Someone has connected!');
+	socket.emit('message', 'TESTING');
+	socket.on('disconnect', () => {
+		console.log('user disconnected');
+	});
+});
+
 // Connect the database
 db.connect();
 

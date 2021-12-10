@@ -1,6 +1,5 @@
 const config = require('../../config');
 const store = require('./store');
-const { socket } = require('../../socket');
 
 const getMessages = (query) => {
 	return new Promise(async (resolve, reject) => {
@@ -39,8 +38,6 @@ const addMessage = (chat, user, message, file) => {
 				date: new Date(),
 				fileUrl,
 			};
-
-			socket.io.emit('message', newFullMessage);
 
 			try {
 				const newMessage = await store.add(newFullMessage);
