@@ -74,9 +74,9 @@ const Chat = () => {
 	}
 
 	return (
-		<main className="w-full min-h-screen  md:text-2xl">
-			<section className="card shadow rounded-none bg-white w-full md:w-4/5 md:rounded-2xl md:my-4">
-				<div className="card-body">
+		<main className="w-full min-h-screen flex justify-center items-center md:text-2xl">
+			<section className="card shadow rounded-none bg-white w-full md:w-4/5 md:rounded-2xl md:my-4 lg:px-12">
+				<div className="card-body ">
 					<h2 className="card-title">
 						{chatInfo
 							? chatInfo.users[0]._id === snap.currentUserId
@@ -126,7 +126,7 @@ const Message = ({ user, text, direction }) => {
 	return (
 		<div
 			style={{ width: 'fit-content' }}
-			className="card shadow my-3 w-auto bg-primary md:w-1/2 md:self-end"
+			className="card shadow my-3 w-auto bg-primary md:w-1/2 self-end"
 		>
 			<div className="card-body text-right md:text-left p-4">
 				<h2 className="card-title md:text-2xl">{user}</h2>
@@ -136,7 +136,7 @@ const Message = ({ user, text, direction }) => {
 	);
 };
 
-const TextInput = ({ sendText, onChange, onClick, value }) => {
+const TextInput = ({ onChange, onClick, value }) => {
 	return (
 		<div className="form-control mt-8 ">
 			<div className="flex space-x-2 ">
