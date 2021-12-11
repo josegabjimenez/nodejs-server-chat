@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 // Components
-import { Hero, Card, CardGrid } from '../components';
+import { Hero, Card, CardGrid, GoBackButton } from '../components';
 
 // State
 import { state } from '../state';
@@ -29,6 +29,7 @@ const UserChats = () => {
 
 	return (
 		<Hero>
+			<GoBackButton />
 			<CardGrid>
 				{snap.userChats &&
 					snap.userChats.map((chat) => {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 // SocketIO
 import { io } from 'socket.io-client';
 
 // Components
-// import { Hero, Card, CardGrid } from '../components';
+import { GoBackButton } from '../components';
 
 // State
 import { state } from '../state';
@@ -17,6 +17,13 @@ const Chat = () => {
 	const [chatInfo, setChatInfo] = useState();
 	const [chatMessages, setChatMessages] = useState([]);
 	const [messageToSend, setMessageToSend] = useState('');
+
+	const messagesEnd = useRef();
+
+	// Scroll to the bottom of the messages
+	const scrollToBottom = () => {
+		messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
+	};
 
 	// Get all the data from the chat
 	const getChat = async (id) => {
@@ -59,10 +66,14 @@ const Chat = () => {
 
 		// Listen for new messages
 		socket.on(`${id}`, (data) => {
-			console.log(data);
 			setChatMessages((prevArray) => [...prevArray, data]);
 		});
 	}, [snap.currentChatId]);
+
+	useEffect(() => {
+		// Scroll to the bottom view
+		scrollToBottom();
+	}, [chatMessages]);
 
 	// Redirection
 	if (!snap.currentUserId) {
@@ -77,6 +88,7 @@ const Chat = () => {
 		<main className="w-full min-h-screen flex justify-center items-center md:text-2xl">
 			<section className="card shadow rounded-none bg-white w-full md:w-4/5 md:rounded-2xl md:my-4 lg:px-12">
 				<div className="card-body ">
+					<GoBackButton />
 					<h2 className="card-title">
 						{chatInfo
 							? chatInfo.users[0]._id === snap.currentUserId
@@ -103,6 +115,7 @@ const Chat = () => {
 						onClick={() => sendMessage()}
 					/>
 				</div>
+				<div ref={messagesEnd}></div>
 			</section>
 		</main>
 	);
