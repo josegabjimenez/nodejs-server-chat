@@ -74,7 +74,7 @@ const Chat = () => {
 	}
 
 	return (
-		<main className="w-full min-h-screen flex justify-center items-center md:text-2xl">
+		<main className="w-full min-h-screen  md:text-2xl">
 			<section className="card shadow rounded-none bg-white w-full md:w-4/5 md:rounded-2xl md:my-4">
 				<div className="card-body">
 					<h2 className="card-title">
@@ -111,7 +111,10 @@ const Chat = () => {
 const Message = ({ user, text, direction }) => {
 	if (direction === 'left') {
 		return (
-			<div className="card shadow my-3 w-full bg-base-100 md:w-1/2 ">
+			<div
+				style={{ width: 'fit-content' }}
+				className="card shadow my-3 bg-base-100 "
+			>
 				<div className="card-body p-4 ">
 					<h2 className="card-title md:text-2xl">{user}</h2>
 					<p>{text}</p>
@@ -121,7 +124,10 @@ const Message = ({ user, text, direction }) => {
 	}
 
 	return (
-		<div className="card shadow my-3 w-auto bg-primary md:w-1/2 md:self-end">
+		<div
+			style={{ width: 'fit-content' }}
+			className="card shadow my-3 w-auto bg-primary md:w-1/2 md:self-end"
+		>
 			<div className="card-body text-right md:text-left p-4">
 				<h2 className="card-title md:text-2xl">{user}</h2>
 				<p>{text}</p>
