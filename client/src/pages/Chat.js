@@ -22,7 +22,17 @@ const Chat = () => {
 
 	// Scroll to the bottom of the messages
 	const scrollToBottom = () => {
-		messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
+		if (snap.currentUserId && snap.currentChatId) {
+			messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
+	// Send a message when the user press the Enter key
+	const handleEnter = (e) => {
+		if (e.keyCode === 13) {
+			//// console.log('Enter pressed');
+			sendMessage();
+		}
 	};
 
 	// Get all the data from the chat
@@ -61,7 +71,6 @@ const Chat = () => {
 	useEffect(() => {
 		// Get Chats
 		const id = snap.currentChatId;
-		console.log(id);
 		getChat(id);
 
 		// Listen for new messages
@@ -113,6 +122,7 @@ const Chat = () => {
 						value={messageToSend}
 						onChange={(e) => handleChange(e)}
 						onClick={() => sendMessage()}
+						onKeyDown={(e) => handleEnter(e)}
 					/>
 				</div>
 				<div ref={messagesEnd}></div>
@@ -149,7 +159,7 @@ const Message = ({ user, text, direction }) => {
 	);
 };
 
-const TextInput = ({ onChange, onClick, value }) => {
+const TextInput = ({ onChange, onClick, value, onKeyDown }) => {
 	return (
 		<div className="form-control mt-8 ">
 			<div className="flex space-x-2 ">
@@ -157,6 +167,7 @@ const TextInput = ({ onChange, onClick, value }) => {
 					type="text"
 					value={value}
 					onChange={onChange}
+					onKeyDown={onKeyDown}
 					placeholder="Write something..."
 					className="w-full input input-primary input-bordered md:text-2xl md:h-20 md:p-10 "
 				/>
