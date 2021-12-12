@@ -39,7 +39,7 @@ const UserChats = () => {
 								id={chat._id}
 								button="Let's chat"
 								route="chat"
-								title={`Chat with ${
+								title={` Chat with ${
 									chat.users[0]._id === snap.currentUserId
 										? chat.users[1].name
 										: chat.users[0].name
